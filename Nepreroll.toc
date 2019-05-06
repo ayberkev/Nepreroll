@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: Nepreroll
+## Notes: Reroll
+## Author: Neptun
+## Version: 0.1
+## DefaultState: enabled
+## SavedVariables: firstSpellChecked, secondSpellChecked, thirdSpellChecked, fourthSpellChecked, fifthSpellChecked, firstSpellID, secondSpellID, thirdSpellID, fourthSpellID, fifthSpellID
+
+Nepreroll.lua
