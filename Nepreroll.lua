@@ -31,7 +31,6 @@ function MyAddonCommands(arg1)
 	end
 	if command == "SHOW" then
 		myframe:Show();
-		clickButton:Show()
 	end
 	if command == "" then
 		if myframe:IsShown() then
