@@ -15,7 +15,7 @@ while enable
   ifWinExist, ahk_id %wowid%
   {
    
-   ControlSend,, {1}, ahk_id %wowid%
+   ControlSend,, {1}, ahk_id %wowid%  ---edit "1" to your choice of hotkey---
 
 
     Sleep 3000
