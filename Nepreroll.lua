@@ -164,19 +164,20 @@ end
 
 function getSpellID(text)
 	if text ~= nil then
-		local spellNames = 
-		{"Raptor Strike","Mongoose Bite","Wrath","Moonfire","Thorns","Demoralizing Roar","Maul","Growl","Bear Form","Swipe",
-		 "Healing Touch","Mark of the Wild","Rejuvenation","Aspect of the Monkey","Tame Beast","Call Pet","Dismiss Pet","Feed Pet",
-		 "Revive Pet","Aspect of the Hawk","Auto shot","Serpent Sting","Arcane Shot","Hunter's Mark","Concussive Shot","Track Beasts",
-		 "Arcane Intellect","Conjure Water","Conjure Food","Arcane Missiles","Fireball","Fire Blast","Frost Armor","Frostbolt",
-		 "Holy Light","Seal of Righteousness","Blessing of Wisdom","Devotion Aura","Divine Protection","Hammer of Justice",
-		 "Righteous Fury","Blessing of Might","Judgement of Light","Judgement of Wisdom","Power Word: Fortitude","Power Word: Shield",
-		 "Lesser Heal","Smite","Renew","Shadow Word: Pain","Fade","Eviscerate","Slice and Dice","Sinister Strike","Backstab","Gouge",
-		 "Evasion","Sprint","Stealth","Pick Pocket","Lightning Bolt","Earth Shock","Earthbind Totem","Stoneclaw Totem","Searing Totem",
-		 "Stoneskin Totem","Lightning Shield","Healing Wave","Curse of Weakness","Corruption","Life Tap","Curse of Agony","Fear",
-		 "Drain Soul","Demon Skin","Summon Imp","Summon Voidwalker","Shadow Bolt","Immolate","Heroic Strike","Battle Stance","Charge",
-		 "Rend","Thunder Clap","Hamstring","Overpower","Battle Shout","Victory Rush","Bloodrage","Defensive Stance","Shield Bash",
-		 "Shield Block"};
+		
+		local spellNames =
+		{"raptor strike","mongoose bite","wrath","moonfire","thorns","demoralizing roar","maul","growl","bear form","swipe",
+         "healing touch","mark of the wild","rejuvenation","aspect of the monkey","tame beast","call pet","dismiss pet","feed pet",
+         "revive pet","aspect of the hawk","auto shot","serpent sting","arcane shot","hunter's mark","concussive shot","track beasts",
+         "arcane intellect","conjure water","conjure food","arcane missiles","fireball","fire blast","frost armor","frostbolt",
+         "holy light","seal of righteousness","blessing of wisdom","devotion aura","divine protection","hammer of justice",
+         "righteous fury","blessing of might","judgement of light","judgement of wisdom","power word: fortitude","power word: shield",
+         "lesser heal","smite","renew","shadow word: pain","fade","eviscerate","slice and dice","sinister strike","backstab","gouge",
+         "evasion","sprint","stealth","pick pocket","lightning bolt","earth shock","earthbind totem","stoneclaw totem","searing totem",
+         "stoneskin totem","lightning shield","healing wave","curse of weakness","corruption","life tap","curse of agony","fear",
+         "drain soul","demon skin","summon imp","summon voidwalker","shadow bolt","immolate","heroic strike","battle stance","charge",
+         "rend","thunder clap","hamstring","overpower","battle shout","victory rush","bloodrage","defensive stance","shield bash",
+         "shield block"};
 		local spellID = 
 		{"2973","1495","5173","8921","467","99","6807","6795","5487","779","5185","1126","774","13163","1515","883","2641","1539",
 		 "982","13165","75","1978","3044","1130","5116","1494","1459","5504","587","5143","133","2136","168","116","635","21084",
@@ -185,7 +186,7 @@ function getSpellID(text)
 		 "1120","687","688","697","686","348","78","2457","100","772","6343","1715","7384","6673","34428","2687","71","72","2565"};
 		local id = nil
 		for i=1,table.getn(spellNames),1 do
-				if text == spellNames[i] then
+				if string.lower(text) == spellNames[i] then
 					id = spellID[i]
 					break
 				end
@@ -468,7 +469,9 @@ function checkSpells()
 		end
 	end
 	]]--
-	print("WE HAVE ALL SPELLS!")
+	if UnitLevel("player") == 1 then
+		print("WE HAVE ALL SPELLS!")
+	end
 	deleteNeprerollMacro();
 	if clickButton:IsShown() then
 		clickButton:Hide();
