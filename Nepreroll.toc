@@ -4,6 +4,6 @@
 ## Author: Neptun
 ## Version: 0.1
 ## DefaultState: enabled
-## SavedVariables: firstSpellID, secondSpellID, thirdSpellID, fourthSpellID, fifthSpellID
+## SavedVariables: firstSpellChecked, secondSpellChecked, thirdSpellChecked, fourthSpellChecked, fifthSpellChecked, firstSpellID, secondSpellID, thirdSpellID, fourthSpellID, fifthSpellID
 
 Nepreroll.lua
