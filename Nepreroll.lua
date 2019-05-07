@@ -164,7 +164,6 @@ end
 
 function getSpellID(text)
 	if text ~= nil then
-		
 		local spellNames =
 		{"raptor strike","mongoose bite","wrath","moonfire","thorns","demoralizing roar","maul","growl","bear form","swipe",
          "healing touch","mark of the wild","rejuvenation","aspect of the monkey","tame beast","call pet","dismiss pet","feed pet",
@@ -200,7 +199,7 @@ function getSpellID(text)
 end
 
 local tooltipFrame = CreateFrame("GameTooltip", "tooltipFrame", UIParent, "GameTooltipTemplate");
-
+	
 local textBoxa = CreateFrame("EditBox", "MyMultiLineEditBoxa", myframe, "InputBoxTemplate");
 local iconFramea = CreateFrame("Button", "iconFramea", myframe);
 iconFramea.texture = iconFramea:CreateTexture("ARTWORK");
@@ -313,16 +312,6 @@ function configureCheckBox(checkBox, pointLocation, pointOffsetX, pointOffsetY)
 	--checkBox.text:SetText(checkBox:GetName())
 end
 
-local checkButtona = CreateFrame("CheckButton", "checkButtona", myframe, "UICheckButtonTemplate") 
-configureCheckBox(checkButtona, "TOPLEFT", -100+globalXOffset, -20);
-local checkButtonb = CreateFrame("CheckButton", "checkButtonb", myframe, "UICheckButtonTemplate") 
-configureCheckBox(checkButtonb, "TOPLEFT", -100+globalXOffset, -50);
-local checkButtonc = CreateFrame("CheckButton", "checkButtonc", myframe, "UICheckButtonTemplate") 
-configureCheckBox(checkButtonc, "TOPLEFT", -100+globalXOffset, -80);
-local checkButtond = CreateFrame("CheckButton", "checkButtond", myframe, "UICheckButtonTemplate") 
-configureCheckBox(checkButtond, "TOPLEFT", -100+globalXOffset, -110);
-local checkButtone = CreateFrame("CheckButton", "checkButtone", myframe, "UICheckButtonTemplate") 
-configureCheckBox(checkButtone, "TOPLEFT", -100+globalXOffset, -140);
 
 local waitTable = {};
 local waitFrame = nil;
@@ -388,8 +377,8 @@ function changeSizeAndAdjustPosition(frame, widthIncrease, heightIncrease)
 	end
 end
 
-function DoWeKnowSpellOrIgnore(checkButton, textBox, orButton, orTextBox)
-	if checkButton:GetChecked() then
+function DoWeKnowSpellOrIgnore(textBox, orButton, orTextBox)
+	if textBox:GetText() ~= "" then
 		if getSpellID(textBox:GetText()) == "" then
 			return false;
 		end
@@ -410,20 +399,21 @@ function DoWeKnowSpellOrIgnore(checkButton, textBox, orButton, orTextBox)
 	end
 	return false;
 end
+local doPrint = true;
 function checkSpells()
-	if DoWeKnowSpellOrIgnore(checkButtona, textBoxa, orButtona, orTextBoxa) == false then
+	if DoWeKnowSpellOrIgnore(textBoxa, orButtona, orTextBoxa) == false then
 		return;
 	end
-	if DoWeKnowSpellOrIgnore(checkButtonb, textBoxb, orButtonb, orTextBoxb) == false then
+	if DoWeKnowSpellOrIgnore(textBoxb, orButtonb, orTextBoxb) == false then
 		return;
 	end
-	if DoWeKnowSpellOrIgnore(checkButtonc, textBoxc, orButtonc, orTextBoxc) == false then
+	if DoWeKnowSpellOrIgnore(textBoxc, orButtonc, orTextBoxc) == false then
 		return;
 	end
-	if DoWeKnowSpellOrIgnore(checkButtond, textBoxd, orButtond, orTextBoxd) == false then
+	if DoWeKnowSpellOrIgnore(textBoxd, orButtond, orTextBoxd) == false then
 		return;
 	end
-	if DoWeKnowSpellOrIgnore(checkButtone, textBoxe, orButtone, orTextBoxe) == false then
+	if DoWeKnowSpellOrIgnore(textBoxe, orButtone, orTextBoxe) == false then
 		return;
 	end
 	--[[
@@ -469,8 +459,15 @@ function checkSpells()
 		end
 	end
 	]]--
-	print("WE HAVE ALL SPELLS!")
+	if doPrint then
+		doPrint = false
+		print("WE HAVE ALL SPELLS!")
+		nepreroll_wait(0.5, function() 
+			doPrint = true;
+		end); 
+	end
 	deleteNeprerollMacro();
+	myframe:SetHeight(frameBaseHeight);
 	if clickButton:IsShown() then
 		clickButton:Hide();
 	end
@@ -488,31 +485,23 @@ end);
 
 function updateSettings()
 	firstSpellID = textBoxa:GetText();
-	firstSpellChecked = checkButtona:GetChecked();
 	secondSpellID = textBoxb:GetText();
-	secondSpellChecked= checkButtonb:GetChecked();
 	thirdSpellID = textBoxc:GetText();
-	thirdSpellChecked = checkButtonc:GetChecked();
 	fourthSpellID = textBoxd:GetText();
-	fourthSpellChecked = checkButtond:GetChecked();
 	fifthSpellID = textBoxe:GetText();
-	fifthSpellChecked = checkButtone:GetChecked();
 end
 
 local addonLoadedFrame = CreateFrame("FRAME");
 addonLoadedFrame:RegisterEvent("ADDON_LOADED");
-addonLoadedFrame:SetScript("OnEvent", function()	
+addonLoadedFrame:SetScript("OnEvent", function()
+	myframe:SetWidth(frameBaseWidth);
+	myframe:SetHeight(frameBaseHeight);
 	if firstSpellID == nil then
 		firstSpellID = textBoxa:GetText();
 	else
 		textBoxa:SetText(firstSpellID);
 		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxa:GetText()));
 		iconFramea.texture:SetTexture(icon);
-	end
-	if firstSpellChecked == nil then
-		firstSpellChecked = checkButtona:GetChecked();
-	else
-		checkButtona:SetChecked(firstSpellChecked);
 	end
 	
 	if secondSpellID == nil then
@@ -522,11 +511,6 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxb:GetText()));
 		iconFrameb.texture:SetTexture(icon);
 	end
-	if secondSpellChecked == nil then
-		secondSpellChecked= checkButtonb:GetChecked();
-	else
-		checkButtonb:SetChecked(secondSpellChecked);
-	end
 	
 	if thirdSpellID == nil then
 		thirdSpellID = "";
@@ -534,11 +518,6 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		textBoxc:SetText(thirdSpellID);
 		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxc:GetText()));
 		iconFramec.texture:SetTexture(icon);
-	end
-	if thirdSpellChecked == nil then
-		thirdSpellChecked = checkButtonc:GetChecked();
-	else
-		checkButtonc:SetChecked(thirdSpellChecked);
 	end
 	
 	if fourthSpellID == nil then
@@ -548,11 +527,6 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxd:GetText()));
 		iconFramed.texture:SetTexture(icon);
 	end
-	if fourthSpellChecked == nil then
-		fourthSpellChecked = checkButtond:GetChecked();
-	else
-		checkButtond:SetChecked(fourthSpellChecked);
-	end
 	
 	if fifthSpellID == nil then
 		fifthSpellID = "";
@@ -560,10 +534,5 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		textBoxe:SetText(fifthSpellID);
 		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxe:GetText()));
 		iconFramee.texture:SetTexture(icon);
-	end
-	if fifthSpellChecked == nil then
-		fifthSpellChecked = checkButtone:GetChecked();
-	else
-		checkButtone:SetChecked(fifthSpellChecked);
 	end
 end);
