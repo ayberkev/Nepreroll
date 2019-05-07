@@ -469,9 +469,7 @@ function checkSpells()
 		end
 	end
 	]]--
-	if UnitLevel("player") == 1 then
-		print("WE HAVE ALL SPELLS!")
-	end
+	print("WE HAVE ALL SPELLS!")
 	deleteNeprerollMacro();
 	if clickButton:IsShown() then
 		clickButton:Hide();
@@ -483,7 +481,9 @@ end
 local spellLearned=CreateFrame("frame")
 spellLearned:RegisterEvent("LEARNED_SPELL_IN_TAB")
 spellLearned:SetScript("OnEvent", function()
-	checkSpells();
+	if UnitLevel("player") == 1 then
+		checkSpells();
+	end
 end);
 
 function updateSettings()
