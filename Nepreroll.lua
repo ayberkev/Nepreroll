@@ -506,7 +506,7 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		firstSpellID = textBoxa:GetText();
 	else
 		textBoxa:SetText(firstSpellID);
-		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(textBoxa:GetText());
+		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxa:GetText()));
 		iconFramea.texture:SetTexture(icon);
 	end
 	if firstSpellChecked == nil then
@@ -519,7 +519,7 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		secondSpellID = "";
 	else
 		textBoxb:SetText(secondSpellID);
-		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(textBoxb:GetText());
+		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxb:GetText()));
 		iconFrameb.texture:SetTexture(icon);
 	end
 	if secondSpellChecked == nil then
@@ -532,7 +532,7 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		thirdSpellID = "";
 	else
 		textBoxc:SetText(thirdSpellID);
-		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(textBoxc:GetText());
+		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxc:GetText()));
 		iconFramec.texture:SetTexture(icon);
 	end
 	if thirdSpellChecked == nil then
@@ -545,7 +545,7 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		fourthSpellID = "";
 	else
 		textBoxd:SetText(fourthSpellID);
-		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(textBoxd:GetText());
+		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxd:GetText()));
 		iconFramed.texture:SetTexture(icon);
 	end
 	if fourthSpellChecked == nil then
@@ -558,7 +558,7 @@ addonLoadedFrame:SetScript("OnEvent", function()
 		fifthSpellID = "";
 	else
 		textBoxe:SetText(fifthSpellID);
-		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(textBoxe:GetText());
+		local name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(getSpellID(textBoxe:GetText()));
 		iconFramee.texture:SetTexture(icon);
 	end
 	if fifthSpellChecked == nil then
