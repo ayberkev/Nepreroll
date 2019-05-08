@@ -176,13 +176,13 @@ function getSpellID(text)
          "stoneskin totem","lightning shield","healing wave","curse of weakness","corruption","life tap","curse of agony","fear",
          "drain soul","demon skin","summon imp","summon voidwalker","shadow bolt","immolate","heroic strike","battle stance","charge",
          "rend","thunder clap","hamstring","overpower","battle shout","victory rush","bloodrage","defensive stance","shield bash",
-         "shield block"};
+         "shield block","taunt"};
 		local spellID = 
 		{"2973","1495","5173","8921","467","99","6807","6795","5487","779","5185","1126","774","13163","1515","883","2641","1539",
 		 "982","13165","75","1978","3044","1130","5116","1494","1459","5504","587","5143","133","2136","168","116","635","21084",
 		 "19742","465","498","853","25780","19740","20271","53408","1243","17","2050","585","139","589","586","2098","5171","1752",
 		 "53","1776","5277","2983","1784","921","403","8042","2484","5730","3599","8071","324","331","702","172","1454","980","5782",
-		 "1120","687","688","697","686","348","78","2457","100","772","6343","1715","7384","6673","34428","2687","71","72","2565"};
+		 "1120","687","688","697","686","348","78","2457","100","772","6343","1715","7384","6673","34428","2687","71","72","2565","355"};
 		local id = nil
 		for i=1,table.getn(spellNames),1 do
 				if string.lower(text) == spellNames[i] then
