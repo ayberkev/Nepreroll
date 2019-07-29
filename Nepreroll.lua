@@ -65,7 +65,6 @@ myframe:SetResizable(true);
 myframe:RegisterForDrag("LeftButton")
 myframe:SetScript("OnDragStart", myframe.StartMoving)
 myframe:SetScript("OnDragStop", myframe.StopMovingOrSizing)
---myframeButton1:Disable()
 myframeButton1:EnableMouse(false);
 
 myframe.title = myframe:CreateFontString(nil, "OVERLAY");
