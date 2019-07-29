@@ -532,15 +532,12 @@ end
 
 function learnSpell(n)
 	if n == 1 then
-		print(n)
 		Card1LearnSpellButton:Enable()
 		Card1LearnSpellButton:Click()
 	elseif n == 2 then
-		print(n)
 		Card2LearnSpellButton:Enable()
 		Card2LearnSpellButton:Click()
 	elseif n == 3 then
-		print(n)
 		Card3LearnSpellButton:Enable()
 		Card3LearnSpellButton:Click()
 	end
