@@ -7,7 +7,7 @@ local frameBaseHeight = 220;
 local globalXOffset = 110;
 
 function createNeprerollMacro()
-	CreateMacro("Neprerollmacro", 1, "#showtooltip Dice of Destiny\n/cast Dice of Destiny;\n/click StaticPopup1Button1;", 1)
+	CreateMacro("Neprerollmacro", 1, "#showtooltip Draft Mode Deck\n/cast Draft Mode Deck;\n/click StaticPopup1Button1;", 1)
 	macroDeleted = false;
 end
 
@@ -100,7 +100,7 @@ end);
 clickButton.texture = clickButton:CreateTexture("ARTWORK");
 clickButton.texture:SetPoint("TOPRIGHT" , clickButton, 0, 0);
 clickButton.texture:SetPoint('BOTTOMLEFT', clickButton, 0, 0)
-clickButton.texture:SetTexture("Interface/Icons/misc_rune_pvp_random")
+clickButton.texture:SetTexture("Interface/Icons/misc_draftmode")
 clickButton:SetAttribute("type", "macro");
 clickButton:SetAttribute("macro", "Neprerollmacro");
 clickButton:SetAlpha(0.5);
@@ -176,7 +176,7 @@ function getSpellID(text)
          "stoneskin totem","lightning shield","healing wave","curse of weakness","corruption","life tap","curse of agony","fear",
          "drain soul","demon skin","summon imp","summon voidwalker","shadow bolt","immolate","heroic strike","battle stance","charge",
          "rend","thunder clap","hamstring","overpower","battle shout","victory rush","bloodrage","defensive stance","shield bash",
-         "shield block","taunt"};
+         "shield block", "taunt"};
 		local spellID = 
 		{"2973","1495","5176","8921","467","99","6807","6795","5487","779","5185","1126","774","13163","1515","883","2641","1539",
 		 "982","13165","75","1978","3044","1130","5116","1494","1459","5504","587","5143","133","2136","168","116","635","21084",
@@ -377,7 +377,7 @@ function changeSizeAndAdjustPosition(frame, widthIncrease, heightIncrease)
 	end
 end
 
-function DoWeKnowSpellOrIgnore(textBox, orButton, orTextBox)
+--[[function DoWeKnowSpellOrIgnore(textBox, orButton, orTextBox)
 	if textBox:GetText() ~= "" then
 		if getSpellID(textBox:GetText()) == "" then
 			return false;
@@ -398,10 +398,64 @@ function DoWeKnowSpellOrIgnore(textBox, orButton, orTextBox)
 		return true;
 	end
 	return false;
+end]]--
+
+
+function checkText()
+	local textboxes = {textBoxa:GetText(), textBoxb:GetText(), textBoxc:GetText(), textBoxd:GetText(), textBoxe:GetText()};
+	local ortextboxes = {orTextBoxa:GetText(), orTextBoxb:GetText(), orTextBoxc:GetText(), orTextBoxd:GetText(), orTextBoxe:GetText()};
+	local orbuttons = {orButtona.enabled, orButtonb.enabled, orButtonc.enabled, orButtond.enabled, orButtone.enabled};
+	local cards = {Card1SpellFrame.Icon.Spell,Card2SpellFrame.Icon.Spell,Card3SpellFrame.Icon.Spell}
+	local timer = 0;
+	for i = 1,10 do
+		local spell = getSpellID(textboxes[i]);
+		local orspell = getSpellID(ortextboxes[i-5]);
+		for r=1,3 do
+		local cardid = tostring(cards[r]);
+--		print(_G["card"..r])
+			if spell == cardid and i <= 5 then
+				learnSpell(r);
+				break
+			elseif orbuttons[i-5] and i >= 6 and orspell == cardid then
+				learnSpell(r);
+				break
+			else
+				if timer == 29 then
+					learnSpell(math.random(3));
+				else
+					timer = timer + 1;
+				end
+			end
+		end
+	end
 end
+
 local doPrint = true;
 function checkSpells()
-	if DoWeKnowSpellOrIgnore(textBoxa, orButtona, orTextBoxa) == false then
+	local textboxes = {textBoxa:GetText(), textBoxb:GetText(), textBoxc:GetText(), textBoxd:GetText(), textBoxe:GetText()};
+	local ortextboxes = {orTextBoxa:GetText(), orTextBoxb:GetText(), orTextBoxc:GetText(), orTextBoxd:GetText(), orTextBoxe:GetText()};
+	local orbuttons = {orButtona.enabled, orButtonb.enabled, orButtonc.enabled, orButtond.enabled, orButtone.enabled};
+	
+	local failcount = 0;
+	
+	checkText();
+	
+	for i=1,5 do
+		if textboxes[i] ~= "" then
+			if not IsSpellKnown(getSpellID(textboxes[i])) then
+				if not orbuttons[i] then
+					failcount = failcount + 1;
+				elseif not ortextboxes[i] ~= "" and not IsSpellKnown(getSpellID(ortextboxes[i])) then
+					failcount = failcount + 1;
+				end
+			end
+		end
+	end
+	if failcount ~= 0 then
+		return;
+	end
+	
+--[[	if DoWeKnowSpellOrIgnore(textBoxa, orButtona, orTextBoxa) == false then
 		return;
 	end
 	if DoWeKnowSpellOrIgnore(textBoxb, orButtonb, orTextBoxb) == false then
@@ -415,7 +469,7 @@ function checkSpells()
 	end
 	if DoWeKnowSpellOrIgnore(textBoxe, orButtone, orTextBoxe) == false then
 		return;
-	end
+	end]]--
 	--[[
 	if checkButtona:GetChecked() then
 		if textBoxa:GetText() ~= "" then
@@ -459,6 +513,7 @@ function checkSpells()
 		end
 	end
 	]]--
+	
 	if doPrint then
 		doPrint = false
 		print("WE HAVE ALL SPELLS!")
@@ -466,14 +521,40 @@ function checkSpells()
 			doPrint = true;
 		end); 
 	end
+	StaticPopup1Button2:Click()
 	deleteNeprerollMacro();
 	myframe:SetHeight(frameBaseHeight);
 	if clickButton:IsShown() then
 		clickButton:Hide();
 	end
 	createClickButton:SetText("Reset");
-	--Logout();
 end
+
+function learnSpell(n)
+	if n == 1 then
+		print(n)
+		Card1LearnSpellButton:Enable()
+		Card1LearnSpellButton:Click()
+	elseif n == 2 then
+		print(n)
+		Card2LearnSpellButton:Enable()
+		Card2LearnSpellButton:Click()
+	elseif n == 3 then
+		print(n)
+		Card3LearnSpellButton:Enable()
+		Card3LearnSpellButton:Click()
+	end
+end
+local spellLearned1=CreateFrame("frame")
+spellLearned1:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+spellLearned1:RegisterEvent("SPELL_CAST_SUCCESS")
+spellLearned1:SetScript("OnEvent", function(self, event, ...)
+	local timestamp,event,sourceGUID,sourceName,sourceFlags,destGUID,destName,destFlags,spellId = ...
+	if sourceName == UnitName("player") and UnitLevel("player") == 1 and spellId == 18285 then
+		checkSpells();
+	end
+end);
+
 
 local spellLearned=CreateFrame("frame")
 spellLearned:RegisterEvent("LEARNED_SPELL_IN_TAB")
